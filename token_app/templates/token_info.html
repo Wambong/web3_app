@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="centered-div">
+    <h1>Уровень E</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button" type="submit">получить информацию о токене</button>
+    </form>
+    {% if token_info %}
+        <p>Name: {{ token_info.name }}</p>
+        <p>Symbol: {{ token_info.symbol }}</p>
+        <p>Total Supply: {{ token_info.totalSupply }}</p>
+    {% endif %}
+</div>
+{% endblock %}

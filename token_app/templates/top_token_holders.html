@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="centered-div">
+   <h1>Уровень C: </h1>
+    <form id="topHoldersForm" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button" type="submit">списка топ адресов</button>
+    </form>
+       <div class="spinner-container" id="spinnerContainer">
+        <div class="spinner" id="spinner"></div>
+        <div class="percentage" id="percentage">0%</div>
+    </div>
+    {% if top_holders %}
+        <h2>Top {{ top_holders|length }} Holders:</h2>
+        <ol>
+            {% for holder in top_holders %}
+                <li>{{ holder.0 }} -<span style="color:red;">Balance:</span> <span style="color:blue;">{{ holder.1 }}</span> </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+
+</div>
+  <script>
+        document.getElementById('topHoldersForm').onsubmit = function() {
+            document.getElementById('spinnerContainer').style.display = 'block';
+
+            let percentage = 0;
+            const percentageElement = document.getElementById('percentage');
+
+            function updatePercentage() {
+                if (percentage < 100) {
+                    percentage += 1;
+                    percentageElement.innerText = percentage + '%';
+                    setTimeout(updatePercentage, 100); // Update every 100ms for demo purposes
+                }
+            }
+
+            updatePercentage();
+        }
+    </script>
+{% endblock %}

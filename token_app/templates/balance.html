@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="centered-div">
+    <h1>Уровень A</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button  class="button" type="submit">получить баланс</button>
+    </form>
+    {% if balance is not None %}
+        <p><span style="color:red;">Balance</span>: <span style="color:blue;">{{ balance }}</span></p>
+    {% endif %}
+</div>
+{% endblock %}
